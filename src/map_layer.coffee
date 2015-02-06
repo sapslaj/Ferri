@@ -10,7 +10,6 @@ class MapLayer
       if cell.x == x and cell.y == y
         return cell
 
-
   addCell: (x, y, type) ->
     if y == undefined
       @cells.push x
