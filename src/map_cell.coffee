@@ -1,5 +1,6 @@
 class MapCell
-  constructor: (@x, @y, @type) ->
+  constructor: (@x, @y, @type, @styling) ->
+    @styling = stylingDefaults if @styling == undefined
     @updateAttributes()
 
   setType: (type, noUpdate) ->
@@ -17,36 +18,20 @@ class MapCell
     else
       false
 
-  contentMapping:
-    wall: ' '
-    free: '.'
-    player: '@'
-    default: '#'
-    conservative: 'C'
-
-  colorMapping:
-    player: '#0f0'
-    conservative: '#f00'
-    default: '#fff'
-    free: '#ddd'
-
-  bgMapping:
-    default: '#000'
-
   _coerceCellContent: ->
-    @content = if @contentMapping.hasOwnProperty(@type)
-      @contentMapping[@type]
+    @content = if @styling.contentMapping.hasOwnProperty(@type)
+      @styling.contentMapping[@type]
     else
-      @contentMapping.default
+      @styling.contentMapping.default
 
   _coerceCellColor: ->
-    @color = if @colorMapping.hasOwnProperty(@type)
-      @colorMapping[@type]
+    @color = if @styling.colorMapping.hasOwnProperty(@type)
+      @styling.colorMapping[@type]
     else
-      @colorMapping.default
+      @styling.colorMapping.default
 
   _coerceCellBg: ->
-    @bgcolor = if @bgMapping.hasOwnProperty(@type)
-      @bgMapping[@type]
+    @bgcolor = if @styling.bgMapping.hasOwnProperty(@type)
+      @styling.bgMapping[@type]
     else
-      @bgMapping.default
+      @styling.bgMapping.default
